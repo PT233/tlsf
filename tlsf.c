@@ -1,13 +1,13 @@
 #include <sys/types.h>
-#include <sys/param.h>   // NULL, 基本宏定义, CHAR_BIT
+#include <sys/param.h>   // NULL, basic macros, CHAR_BIT
 #include <sys/kernel.h>  // KASSERT
 #include <sys/systm.h>   // printf, memcpy
 #include <sys/malloc.h>  // malloc(9)
-#include <sys/stddef.h>  // offsetof宏
+#include <sys/stddef.h>  // offsetof macro
 
 #include "tlsf.h"
 
-/* 确保 CHAR_BIT 被定义 */
+/* Ensure CHAR_BIT is defined */
 #ifndef CHAR_BIT
 #define CHAR_BIT 8
 #endif

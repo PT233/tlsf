@@ -28,7 +28,7 @@ make clean
 make
 
 # 2. 加载模块
-sudo kldload ./tlsf_allocator.ko
+kldload ./tlsf_allocator.ko
 
 # 3. 查看加载信息
 dmesg | tail
@@ -67,7 +67,7 @@ cc -o test_tlsf test_tlsf.c
 ## 🔧 卸载模块
 
 ```bash
-sudo kldunload tlsf_allocator
+kldunload tlsf_allocator
 ```
 
 ## 📁 文件说明
@@ -100,10 +100,10 @@ sys/param.h: No such file or directory
 **解决**: 安装内核源码
 ```bash
 # FreeBSD 14.3
-sudo pkg install src
+pkg install src
 # 或从仓库获取
-sudo fetch ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/14.3-RELEASE/src.txz
-sudo tar -C / -xzf src.txz
+fetch ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/14.3-RELEASE/src.txz
+tar -C / -xzf src.txz
 ```
 
 ### 加载错误
@@ -122,8 +122,8 @@ kldload: can't load ./tlsf_allocator.ko: module already loaded
 
 **解决**: 先卸载再加载
 ```bash
-sudo kldunload tlsf_allocator
-sudo kldload ./tlsf_allocator.ko
+kldunload tlsf_allocator
+kldload ./tlsf_allocator.ko
 ```
 
 ### 运行时错误
