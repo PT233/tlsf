@@ -31,7 +31,7 @@ int main() {
     if (ret < 0) {
         perror("TLSF allocation failed");
     } else {
-        printf("#TLSF: size=%zu, ptr=%p\n", req.size, req.ptr);
+        printf("#TLSF allocation successful: size=%zu, ptr=%p\n", req.size, req.ptr);
 
         // Test 2: Free memory
         ret = ioctl(fd, FREE_IOCTL_TLSF, &req);
