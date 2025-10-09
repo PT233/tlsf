@@ -1,11 +1,16 @@
 #include <sys/types.h>
-#include <sys/param.h>   // NULL, 基本宏定义
+#include <sys/param.h>   // NULL, 基本宏定义, CHAR_BIT
 #include <sys/kernel.h>  // KASSERT
 #include <sys/systm.h>   // printf, memcpy
 #include <sys/malloc.h>  // malloc(9)
 #include <sys/stddef.h>  // offsetof宏
 
 #include "tlsf.h"
+
+/* 确保 CHAR_BIT 被定义 */
+#ifndef CHAR_BIT
+#define CHAR_BIT 8
+#endif
 
 #if defined(__cplusplus)
 #define tlsf_decl inline
@@ -412,14 +417,16 @@ static void block_set_prev_used(block_header_t* block)
 
 static block_header_t* block_from_ptr(const void* ptr)
 {
+	/* 使用 __DECONST 安全地去除 const 限定符 */
 	return tlsf_cast(block_header_t*,
-		tlsf_cast(const unsigned char*, ptr) - block_start_offset);
+		__DECONST(unsigned char*, ptr) - block_start_offset);
 }
 
 static void* block_to_ptr(const block_header_t* block)
 {
+	/* 使用 __DECONST 安全地去除 const 限定符 */
 	return tlsf_cast(void*,
-		tlsf_cast(const unsigned char*, block) + block_start_offset);
+		__DECONST(unsigned char*, block) + block_start_offset);
 }
 
 /* Return location of next block after block of given size. */
