@@ -31,14 +31,14 @@ int main() {
     if (ret < 0) {
         perror("TLSF allocation failed");
     } else {
-        printf("✓ TLSF: size=%zu, ptr=%p\n", req.size, req.ptr);
+        printf("#TLSF: size=%zu, ptr=%p\n", req.size, req.ptr);
 
         // Test 2: Free memory
         ret = ioctl(fd, FREE_IOCTL_TLSF, &req);
         if (ret < 0) {
             perror("TLSF free failed");
         } else {
-            printf("✓ TLSF free successful: ptr=%p\n", req.ptr);
+            printf("#TLSF free successful: ptr=%p\n", req.ptr);
         }
     }
 
@@ -50,14 +50,14 @@ int main() {
     if (ret < 0) {
         perror("Baseline allocation failed");
     } else {
-        printf("✓ Baseline allocation successful: size=%zu, ptr=%p\n", req.size, req.ptr);
+        printf("#Baseline allocation successful: size=%zu, ptr=%p\n", req.size, req.ptr);
 
         // Test 4: Baseline free
         ret = ioctl(fd, FREE_IOCTL_BASELINE, &req);
         if (ret < 0) {
             perror("Baseline free failed");
         } else {
-            printf("✓ Baseline free successful: ptr=%p\n", req.ptr);
+            printf("#Baseline free successful: ptr=%p\n", req.ptr);
         }
     }
 
