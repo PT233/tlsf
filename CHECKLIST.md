@@ -40,20 +40,30 @@
 
 ## 🔧 已修复问题
 
-### 1. KASSERT格式问题
+### 第一轮修复: KASSERT和格式问题
 - [x] Line 443: 添加错误消息
 - [x] Line 660: 添加错误消息
 - [x] Line 778: 添加错误消息
 - [x] Line 1150: 添加错误消息
 - [x] Line 827: 修复tlsf_insist宏
 
-### 2. 代码格式问题
+### 第二轮修复: 代码格式问题
 - [x] tlsf_allocator.c: 7处换行修复
 - [x] tlsf_allocator.c Line 90: 空格修复 (error!= → error !=)
 
-### 3. 头文件问题
-- [x] tlsf.c: 添加 <sys/kernel.h>
-- [x] tlsf.c: 添加 <sys/stddef.h>
+### 第三轮修复: FreeBSD编译错误
+- [x] tlsf.c Line 416: const 限定符修复
+- [x] tlsf.c Line 422: const 限定符修复
+- [x] tlsf.c Line 1050: _DEBUG 宏检查修复
+- [x] tlsf.c Line 1080: _DEBUG 宏检查修复
+
+### 总计修复
+- [x] KASSERT格式: 5处
+- [x] 代码换行: 7处
+- [x] 代码格式: 1处
+- [x] const限定符: 2处
+- [x] 预处理器宏: 2处
+- **总计**: 17处修复 ✅
 
 ## 📊 质量评分: 9.9/10
 

@@ -413,13 +413,13 @@ static void block_set_prev_used(block_header_t* block)
 static block_header_t* block_from_ptr(const void* ptr)
 {
 	return tlsf_cast(block_header_t*,
-		tlsf_cast(unsigned char*, ptr) - block_start_offset);
+		tlsf_cast(const unsigned char*, ptr) - block_start_offset);
 }
 
 static void* block_to_ptr(const block_header_t* block)
 {
 	return tlsf_cast(void*,
-		tlsf_cast(unsigned char*, block) + block_start_offset);
+		tlsf_cast(const unsigned char*, block) + block_start_offset);
 }
 
 /* Return location of next block after block of given size. */
@@ -1047,7 +1047,7 @@ void tlsf_remove_pool(tlsf_t tlsf, pool_t pool)
 ** TLSF main interface.
 */
 
-#if _DEBUG
+#if defined(_DEBUG) && _DEBUG
 int test_ffs_fls()
 {
 	/* Verify ffs/fls work properly. */
@@ -1077,7 +1077,7 @@ int test_ffs_fls()
 
 tlsf_t tlsf_create(void* mem)
 {
-#if _DEBUG
+#if defined(_DEBUG) && _DEBUG
 	if (test_ffs_fls())
 	{
 		return 0;
