@@ -87,7 +87,7 @@ static int tlsf_module_event_handler(struct module *m, int event_type, void *arg
             // 3. 创建字符设备 /dev/my_alloc
             error = make_dev_p(MAKEDEV_CHECKNAME, &my_alloc_cdev, &my_alloc_cdevsw, 0,
                                UID_ROOT, GID_WHEEL, 0666, "my_alloc");
-            if (error!= 0) {
+            if (error != 0) {
                 tlsf_destroy(tlsf_instance);
                 free(tlsf_memory_pool, M_TLSF_POOL);
                 return error;
