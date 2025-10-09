@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <sys/param.h>   // NULL, 基本宏定义
-#include <sys/systm.h>   // printf, memcpy, KASSERT
+#include <sys/kernel.h>  // KASSERT
+#include <sys/systm.h>   // printf, memcpy
 #include <sys/malloc.h>  // malloc(9)
 #include <sys/stddef.h>  // offsetof宏
 
@@ -439,7 +440,7 @@ static block_header_t* block_next(const block_header_t* block)
 {
 	block_header_t* next = offset_to_block(block_to_ptr(block),
 		block_size(block) - block_header_overhead);
-	KASSERT(!block_is_last(block));
+	KASSERT(!block_is_last(block), ("block is last"));
 	return next;
 }
 
@@ -656,7 +657,7 @@ static block_header_t* block_split(block_header_t* block, size_t size)
 	KASSERT(block_to_ptr(remaining) == align_ptr(block_to_ptr(remaining), ALIGN_SIZE)
 		, ("remaining block not aligned properly"));
 
-	KASSERT(block_size(block) == remain_size + size + block_header_overhead);
+	KASSERT(block_size(block) == remain_size + size + block_header_overhead, ("block size mismatch"));
 	block_set_size(remaining, remain_size);
 	KASSERT(block_size(remaining) >= block_size_min , ("block split with invalid size"));
 
@@ -774,7 +775,7 @@ static block_header_t* block_locate_free(control_t* control, size_t size)
 
 	if (block)
 	{
-		KASSERT(block_size(block) >= size);
+		KASSERT(block_size(block) >= size, ("block size too small"));
 		remove_free_block(control, block, fl, sl);
 	}
 
@@ -823,7 +824,7 @@ typedef struct integrity_t
 	int status;
 } integrity_t;
 
-#define tlsf_insist(x) { KASSERT(x); if (!(x)) { status--; } }
+#define tlsf_insist(x) { KASSERT((x), (#x)); if (!(x)) { status--; } }
 
 static void integrity_walker(void* ptr, size_t size, int used, void* user)
 {
@@ -1146,7 +1147,7 @@ void* tlsf_memalign(tlsf_t tlsf, size_t align, size_t size)
 	block_header_t* block = block_locate_free(control, aligned_size);
 
 	/* This can't be a static assert. */
-	KASSERT(sizeof(block_header_t) == block_size_min + block_header_overhead);
+	KASSERT(sizeof(block_header_t) == block_size_min + block_header_overhead, ("block header size mismatch"));
 
 	if (block)
 	{
