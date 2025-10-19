@@ -93,14 +93,14 @@ void test_mixed_size_allocs(int fd, int iterations, u_long alloc_cmd, u_long fre
 }
 
 
-int main(int argc, char *argv) {
+int main(int argc, char **argv) {
     if (argc!= 3) {
-        fprintf(stderr, "Usage: %s <test_type: small|mixed> <allocator: tlsf|baseline>\n", argv);
+        fprintf(stderr, "Usage: %s <test_type: small|mixed> <allocator: tlsf|baseline>\n", argv[0]);
         return 1;
     }
 
-    char *test_type = argv;
-    char *allocator_type = argv;
+    char *test_type = argv[1];
+    char *allocator_type = argv[2];
     int iterations = 10000;
 
     int fd = open(DEVICE_PATH, O_RDWR);
