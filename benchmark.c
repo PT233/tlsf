@@ -6,7 +6,8 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include "alloc_ioctl.h"
-#define DEVICE_PATH "/dev/my_alloc"/* 高精度计时函数 */
+#define DEVICE_PATH "/dev/my_alloc"
+/* 高精度计时函数 */
 long long get_time_usec() {
     struct timeval tv;
     gettimeofday(&tv, NULL);
